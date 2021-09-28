@@ -5,7 +5,7 @@ const client = require("./config/gcloud");
 const buildRequestDetection = require('./helpers');
 app.use(express.json());
 
-app.post('/image', function (req, res) {
+app.post('/image', function (_, res) {
     client
   .labelDetection('./nature.jpeg')
   .then(results => {
@@ -21,9 +21,9 @@ app.post('/image', function (req, res) {
   });
 })
 
-app.post('/text-detection', async function (req, res) {
+app.post('/text-detection', async function (_, res) {
    try {
-    const request = buildRequestDetection("https://lh4.googleusercontent.com/-wm-ReffIBqo/VCrUUAZtH9I/AAAAAAAAGVo/yK8SlvdPKdQ/s458/documento-unico-de-identidad-el-salvador.jpg");
+    const request = buildRequestDetection("https://pbs.twimg.com/media/Atb78DMCMAAhVkR.jpg");
       const [result] = await client.batchAnnotateImages(request);
       const detections = result.responses[0].fullTextAnnotation;
       return res.json({
